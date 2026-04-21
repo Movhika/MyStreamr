@@ -85,3 +85,20 @@ Optional. Proxies which should be used based on domain. Supports minimatch. E.g.
 #### `TMDB_ACCESS_TOKEN`
 
 **Required**. TMDB access token to get information like title and year for content. Use the [API Read Access Token](https://www.themoviedb.org/settings/api).
+
+## Docker Compose
+
+This fork can be run directly with Docker Compose.
+
+1. Copy `.env.example` to `.env`
+2. Set your `TMDB_ACCESS_TOKEN`
+3. Start the stack:
+
+```bash
+docker compose up --build -d
+```
+
+4. Open `http://localhost:51546`
+5. Use the generated manifest at `http://localhost:51546/manifest.json`
+
+The included `compose.yaml` builds the app locally from your fork, exposes port `51546`, and persists the SQLite cache in the named Docker volume `mystreamr-cache`.
