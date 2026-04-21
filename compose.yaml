@@ -1,22 +1,13 @@
 services:
-  mystreamr:
-    build:
-      context: .
-      dockerfile: Dockerfile
-    container_name: mystreamr
+  webstreamr:
+    image: ghcr.io/movhika/mystreamr:latest
+    container_name: webstreamr
     restart: unless-stopped
+    env_file:
+      - .env
     environment:
       NODE_ENV: production
-      PORT: ${PORT:-51546}
       CACHE_DIR: /app/cache
-      TMDB_ACCESS_TOKEN: ${TMDB_ACCESS_TOKEN:?Set TMDB_ACCESS_TOKEN in .env}
-      CONFIGURATION_DESCRIPTION: ${CONFIGURATION_DESCRIPTION:-}
-      DISABLED_EXTRACTORS: ${DISABLED_EXTRACTORS:-}
-      DISABLED_SOURCES: ${DISABLED_SOURCES:-}
-      FLARESOLVERR_ENDPOINT: ${FLARESOLVERR_ENDPOINT:-}
-      MANIFEST_ID: ${MANIFEST_ID:-webstreamr-mbg}
-      MANIFEST_NAME: ${MANIFEST_NAME:-WebStreamrMBG}
-      PROXY_CONFIG: ${PROXY_CONFIG:-}
     ports:
       - "${PORT:-51546}:${PORT:-51546}"
     volumes:

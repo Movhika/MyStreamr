@@ -88,17 +88,27 @@ Optional. Proxies which should be used based on domain. Supports minimatch. E.g.
 
 ## Docker Compose
 
-This fork can be run directly with Docker Compose.
+This fork can be run directly with Docker Compose using the published GHCR image `ghcr.io/movhika/mystreamr:latest`.
 
 1. Copy `.env.example` to `.env`
 2. Set your `TMDB_ACCESS_TOKEN`
 3. Start the stack:
 
 ```bash
-docker compose up --build -d
+docker compose up -d
 ```
 
 4. Open `http://localhost:51546`
 5. Use the generated manifest at `http://localhost:51546/manifest.json`
 
-The included `compose.yaml` builds the app locally from your fork, exposes port `51546`, and persists the SQLite cache in the named Docker volume `mystreamr-cache`.
+The included `compose.yaml` pulls the published container image, exposes port `51546`, and persists the SQLite cache in the named Docker volume `mystreamr-cache`.
+
+When pushing to `main`, GitHub Actions publishes a multi-arch image to GHCR using `.github/workflows/docker-publish.yml`.
+
+If you prefer to build locally from source instead of pulling GHCR, use:
+
+```bash
+docker compose -f compose.yaml -f compose.build.yaml up -d --build
+```
+
+If GHCR pull access is denied on your VPS after the first publish, open the package settings in GitHub and make the container package public.
